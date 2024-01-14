@@ -1,10 +1,9 @@
 #############################################################################################
 # This problem is split into 2 parts the first is to include the recursion function from the 
-# book. Run it, and understand it. The second part is to do this recursivivly calculate the
-# square root of a number using this method defined in the problem. Need to keep calling the 
-# function until the number calculated is within a tolerance of +/- .01
+# book. Run it, and understand it, and comment it out. The second part is to recursivivly
+# calculate the square root of a number using this method defined in the problem. Need to keep 
+# calling the function until the number calculated is within a tolerance of +/- .01
 #############################################################################################
-import numpy as np
 
 
 ###############################################
@@ -24,9 +23,10 @@ import numpy as np
 # square root calculation
 ###############################################
 import numpy as np
+
 #define a function to do the calculation and return the result
 def calc(number, guess):
-    num = guess + number/guess
+    num = guess + (number/guess)
     return num/2 
 
 

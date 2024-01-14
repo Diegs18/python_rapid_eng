@@ -1,7 +1,7 @@
 ##################################################
 # Program to take inputs from the user as a, b, 
-# and c and use it to solver the quadratic formula
-# y = ax^2 + bx + c
+# and c and use it to solve the quadratic formula
+# where y = ax^2 + bx + c
 ##################################################
 
 import numpy as np
