@@ -2,6 +2,8 @@
 # Program to take inputs from the user as a, b, 
 # and c and use it to solve the quadratic formula
 # where y = ax^2 + bx + c
+#
+# Author: Nick DiGregorio 1220871392
 ##################################################
 
 import numpy as np

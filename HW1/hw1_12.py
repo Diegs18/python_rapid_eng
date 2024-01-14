@@ -6,6 +6,8 @@
 #   b. Only check for factors up to and including sqrt(n)
 #   c. If there is a single prime factor, no need to keep looking
 #      because number is not prime
+#
+# Author: Nick DiGregorio 1220871392
 #################################################################
 
 import numpy as np

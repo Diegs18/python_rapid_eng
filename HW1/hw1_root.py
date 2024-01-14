@@ -3,6 +3,8 @@
 # book. Run it, and understand it, and comment it out. The second part is to recursivivly
 # calculate the square root of a number using this method defined in the problem. Need to keep 
 # calling the function until the number calculated is within a tolerance of +/- .01
+#
+# Author: Nick DiGregorio 1220871392
 #############################################################################################
 
 
