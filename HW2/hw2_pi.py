@@ -5,6 +5,8 @@
 # print how close the value we found in the integration is to the value definined in 
 # numpy.pi. To see how the function was converted to z from x see hand clac pdf.
 #
+# Original eq => integrat from 0 to inf(dx/((1+x)*sqrt(x))) = pi
+#
 # Nicholas DiGregorio, 1220871392
 #########################################################################################
 import numpy as np                  #getting the array fns
