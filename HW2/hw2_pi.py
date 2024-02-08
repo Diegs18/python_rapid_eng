@@ -17,11 +17,16 @@ from scipy.integrate import quad  #getting the integration fn
 #########################################################################################
 # Function: integrate y = a^2 + bx + c
 #########################################################################################
-def integrate_y (z):
-    a = 1 + (z / (1 - z))
-    b = np.sqrt(z / (1 - z))
-    c = (1 - z)**2
-    return (1 / (a * b)) * (1 / c)
+#def integrate_y (z): #unsimplified
+#    a = 1 + (z / (1 - z))
+#    b = np.sqrt(z / (1 - z))
+#    c = (1 - z)**2
+#    return (1 / (a * b)) * (1 / c)
+
+def integrate_y (z): #simplified
+    b = np.sqrt(z*(1-z))
+    return 1 / (b)
+
 
 #########################################################################################
 # Main
@@ -35,5 +40,5 @@ answer, err = quad(integrate_y, START, END)
 
 #display answers
 print("Pi is", round(np.pi, 8))
-diff = answer - np.pi
+diff = np.pi - answer
 print(f"Difference from numpy.pi is: {diff:.15f}")
