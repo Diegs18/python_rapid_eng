@@ -1,7 +1,10 @@
 ###################################################################################################################
+#   This program runs and opens up the data for heart disease and prints out the realtionships of covarience and
+#   correlation. It prints the strongest overal relationships between all the variables as well as the variables
+#   that have the strongest relationships with heart disease. At the end the program will create a pair plot of all
+#   the features including our outut heart disease. 
 #
-#
-#
+#   Author: Nicholas DiGregorio 1220871392
 ###################################################################################################################
 
 
@@ -30,7 +33,7 @@ def mat_to_ser(mat):
 # Returns: 
 #   nothing
 ####################################################################################
-def var_to_var(mat_unstack, size):
+def var_to_var(mat_unstack, size): #didn't end up needing this
     for index in range(size):
         #print(index)
         #print(df.keys()[index])
@@ -58,12 +61,12 @@ import numpy as np
 ### Get the data 
 df = pd.read_csv('heart1.csv')
 df_size = df.shape[1] - 1 # -1 for output column
-print(df)
+#print(df)
 
 
 cov = df.cov().abs()
 cov_unstack = mat_to_ser(cov)
-#var_to_var(cov_unstack, df_size)
+
 print()
 print()
 print("####################################################################################")
@@ -73,7 +76,6 @@ print()
 corr = df.corr().abs()
 corr_unstack = mat_to_ser(corr)
 print(cov_unstack.head(20))
-#var_to_var(corr_unstack, df_size)
 print()
 print()
 print("####################################################################################")
