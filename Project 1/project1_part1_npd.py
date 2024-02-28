@@ -6,7 +6,10 @@
 #
 #   Author: Nicholas DiGregorio 1220871392
 ###################################################################################################################
-
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
 ####################################################################################
 # mat_to_ser: 
@@ -53,10 +56,7 @@ def var_to_var(mat_unstack, size): #didn't end up needing this
 # main
 ####################################################################################
 
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
+
 
 ### Get the data 
 df = pd.read_csv('heart1.csv')
