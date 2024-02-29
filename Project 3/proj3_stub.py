@@ -1,3 +1,10 @@
+import scipy.optimize as optimize
+import numpy as np
+import pandas as pd
+
+P1_VDD_STEP = 0.1 
+Q =  1.6021766208e-19
+KB= 1.380648e-23
 ################################################################################
 # This function does the optimization for the resistor                         #
 # Inputs:                                                                      #
@@ -32,11 +39,67 @@ def opt_r(r_value,ide_value,phi_value,area,temp,src_v,meas_i):
 
 
 ################################################################################
-# This is how leastsq calls opt_r                                              #
+# solve_diode_v
+#   Inputs:
+#       vd:   Diode voltage
+#       vs:   Source Voltage
+#       r:    Resistance 
+#       n:    ideality value    
+#       temp: temperature
+#       Is:   bias current
 ################################################################################
 
-    r_val_opt = optimize.leastsq(opt_r,r_val,
-                                 args=(ide_val,phi_val,P2_AREA,P2_T,
-                                       source_v,meas_diode_i))
-    r_val = r_val_opt[0][0]
+def solve_diode_v(est_v, src_v, r_value, ide_value, temp, is_value):
+    term1 = (est_v-src_v)/r_value
+    term2 = compute_diode_current(est_v,ide_value,temp,is_value)
+    return term1 + term2
+
+################################################################################
+# solve_diode_v
+#   Inputs:
+#       vd:   Diode voltage
+#       vs:   Source Voltage
+#       r:    Resistance 
+#       n:    ideality value    
+#       temp: temperature
+#       Is:   bias current
+################################################################################
+def compute_diode_current(est_v,ide_value,temp,is_value):
+    vt = (ide_value*KB*temp)/Q
+    exp=(est_v)/vt
+    return is_value*(np.e**(exp)-1)
+
+
+##################################################################################
+# Main
+##################################################################################
+
+vsrc = np.arange(0.1, 2.5, 0.1)
+
+### Read File in 
+names_list = ["Vs", "mId"]
+df = pd.read_csv("DiodeIV.txt", names=names_list, sep=" ")
+print(df)
+
+#print()
+#print(df.head(2))
+#print()
+#print(df['Vs'])
+#print()
+#print(df['Vd'])
+
+source_v = df['Vs']
+meas_diode_i = df['mId']
+print(source_v[0])
+r_val = 1000
+ide_val = 1.5
+phi_val = 0.8
+P2_AREA = 1e-8
+P2_T    = 375
+r_val_opt = optimize.leastsq(opt_r,r_val,
+                                args=(ide_val,phi_val,P2_AREA,P2_T,
+                                    source_v,meas_diode_i))
+r_val = r_val_opt[0][0]
+
+print(r_val)
 
