@@ -2,6 +2,15 @@ import scipy.optimize as optimize
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+####################################################################################################
+# This program runs and finds the current through the circuit. It plots the the Diode current vs
+# the source voltage and plots the Diode current vs the Diode voltage. For the second part, the 
+# program attempts to find the parameters of this diode by optimizing the input parameters. The program
+# then plots its model and the actual measurements vs source voltage. 
+#
+#
+# Author Nicholas DiGregorio, 1220871392
+###################################################################################################
 
 P1_VDD_STEP = 0.1 
 Q =  1.6021766208e-19
@@ -34,6 +43,10 @@ def find_i_v(src_v,r_value,ide_value, temp, is_value):
     # compute the diode current
     diode_i = compute_diode_current(est_v, ide_value, temp, is_value)
     return diode_i, est_v
+
+##############################################################################
+# This function is the same but calculates the is value for the user
+#############################################################################
 
 def find_i_v2(src_v,r_value,ide_value, temp, phi_value, area):
     est_v   = np.zeros_like(src_v)       # an array to hold the diode voltages
@@ -80,7 +93,7 @@ def opt_r(r_value,ide_value,phi_value,area,temp,src_v,meas_i):
         est_v[index] = prev_v            # store for error analysis
 
     # compute the diode current
-    diode_i = compute_diode_current(est_v,ide_value,temp,is_value)
+    diode_i = compute_diode_current(est_v, ide_value, temp, is_value)
     return meas_i - diode_i
 
 ################################################################################
@@ -161,7 +174,7 @@ def opt_phi(phi_value,r_value,ide_value,area,temp,src_v,meas_i):
 
 def solve_diode_v(est_v, src_v, r_value, ide_value, temp, is_value):
     term1 = (est_v-src_v)/r_value
-    term2 = compute_diode_current(est_v,ide_value,temp,is_value)
+    term2 = compute_diode_current(est_v, ide_value, temp, is_value)
     return term1 + term2
 
 ################################################################################
@@ -174,9 +187,9 @@ def solve_diode_v(est_v, src_v, r_value, ide_value, temp, is_value):
 #       temp: temperature
 #       Is:   bias current
 ################################################################################
-def compute_diode_current(est_v,ide_value,temp,is_value):
-    vt = (ide_value*KB*temp)/Q
-    return is_value*(np.exp(est_v/vt)-1)
+def compute_diode_current(est_v, ide_value, temp, is_value):
+    vt = ( ide_value * KB * temp ) / Q
+    return is_value*( np.exp( est_v / vt ) - 1)
 
 
 ##################################################################################
@@ -210,11 +223,13 @@ diode_i, diode_v = find_i_v(src_v,r_val,ide_val,temp, is_val)
 #print(diode_i)
 ax1 = plt.subplot()
 
+#plotting source V vs diode I
 ax1.set_xlabel("Source Voltage (V)")
 ax1.set_ylabel("Diode current (log(A)) vs Source Voltage")
 ax1.yaxis.label.set_color('red')
 ax1.plot(src_v,np.log10(diode_i), 'r-')
 
+#plotting diode V vs doide I
 ax2 = ax1.twinx()
 ax2.set_xlabel("Diode Voltage (V)")
 ax2.set_ylabel("Diode current (log(A)) vs Diode Voltage")
@@ -266,12 +281,13 @@ while(error>1e-8 and i<I_LIM):
     i += 1
 
 ax1 = plt.subplot()
-
+#plot the measured diode current vs source voltage
 ax1.set_xlabel("Source Voltage (V)")
 ax1.set_ylabel("Measured Diode current (log(A)) vs Source Voltage")
 ax1.yaxis.label.set_color('red')
 ax1.plot(src_v,np.log10(meas_diode_i), 'rx-', markersize=9)
 
+#plot the modeled diode current vs source voltage
 model_i, model_vd = find_i_v2(src_v, r_val, ide_val, P2_T, phi_val, P2_AREA)
 ax2 = ax1.twinx()
 ax2.set_ylabel("Model Diode current (log(A)) vs Diode Voltage")
